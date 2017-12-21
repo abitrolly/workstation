@@ -1,0 +1,8 @@
+---
+# [ ] patch ansible-playbook to remove this header
+
+- hosts: all
+  tasks:
+  - name: install Atom from https://atom.io/download/deb
+    apt: deb=https://atom.io/download/deb
+    become: yes

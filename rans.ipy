@@ -1,0 +1,31 @@
+#!/usr/bin/env ipython
+"""\
+usage: rans.ipy <playbook.yml>
+
+Run ansible playbooks locally.
+
+"""
+
+import sys
+
+# detect that `ansible-playbook` executable exists
+# [ ] make the check cross-platform
+ansible_exists = !which ansible-playbook
+if not ansible_exists:
+    sys.exit("Make sure 'ansible-playbook' is installed.")
+
+# ansible allows to specify hosts without inventory file
+# by separating them with comma
+HOSTS="127.0.0.1,"
+ARGS=" ".join(sys.argv[1:])
+
+if not ARGS:
+    !echo "{__doc__}"
+    sys.exit("Specify playbook to run.")
+
+
+# [ ] ask sudo pass only if playbook requires sudo
+
+!ansible-playbook -i {HOSTS} --ask-become-pass --connection=local {ARGS}
+#!ansible-playbook --connection=local {ARGS}
+
